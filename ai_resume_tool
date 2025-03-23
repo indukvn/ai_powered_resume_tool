@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Resume Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      width: 70%;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      color: #007BFF;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Your AI-Powered Resume Feedback</h2>
+    </div>
+
+    <div class="output">
+      <p><strong>Role Interested In:</strong> <span id="rolePlaceholder">Loading...</span></p>
+      <p><strong>Strengths:</strong> <span id="strengthsPlaceholder">Loading...</span></p>
+      <p><strong>Areas for Improvement:</strong> <span id="improvementPlaceholder">Loading...</span></p>
+      <p><strong>Interview Questions:</strong> <span id="questionsPlaceholder">Loading...</span></p>
+    </div>
+
+    <div class="footer">
+      <p>Powered by AI to help you land your dream job!</p>
+    </div>
+  </div>
+
+  <script>
+    // Fetch query parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const role = urlParams.get('role');
+    const feedback = urlParams.get('feedback');
+
+    if (role && feedback) {
+      // Dynamically insert values into the page
+      document.getElementById('rolePlaceholder').innerText = role;
+      const feedbackParts = feedback.split('|');
+      document.getElementById('strengthsPlaceholder').innerText = feedbackParts[0] || 'No strengths feedback available';
+      document.getElementById('improvementPlaceholder').innerText = feedbackParts[1] || 'No improvement feedback available';
+      document.getElementById('questionsPlaceholder').innerText = feedbackParts[2] || 'No questions available';
+    } else {
+      document.getElementById('rolePlaceholder').innerText = 'No role provided';
+      document.getElementById('strengthsPlaceholder').innerText = 'No feedback available';
+      document.getElementById('improvementPlaceholder').innerText = 'No feedback available';
+      document.getElementById('questionsPlaceholder').innerText = 'No feedback available';
+    }
+  </script>
+</body>
+</html>
