@@ -12,6 +12,7 @@
       padding: 0;
       color: #333;
     }
+
     .container {
       width: 70%;
       margin: 30px auto;
@@ -20,12 +21,14 @@
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     .header {
       text-align: center;
       color: #007BFF;
       font-size: 2.5em;
       margin-bottom: 30px;
     }
+
     .output {
       margin-top: 20px;
       padding: 15px;
@@ -33,10 +36,24 @@
       border: 1px solid #ddd;
       border-radius: 8px;
     }
+
+    .output p {
+      margin: 10px 0;
+    }
+
     .footer {
       text-align: center;
       margin-top: 40px;
       color: #777;
+    }
+
+    .footer a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .error {
+      color: red;
     }
   </style>
 </head>
@@ -54,7 +71,7 @@
     </div>
 
     <div class="footer">
-      <p>Powered by AI to help you land your dream job!</p>
+      <p>Powered by AI to help you land your dream job! <a href="#">Learn more</a></p>
     </div>
   </div>
 
@@ -67,15 +84,24 @@
     if (role && feedback) {
       // Dynamically insert values into the page
       document.getElementById('rolePlaceholder').innerText = role;
+      
+      // Split the feedback string by '|' and assign to the relevant placeholders
       const feedbackParts = feedback.split('|');
       document.getElementById('strengthsPlaceholder').innerText = feedbackParts[0] || 'No strengths feedback available';
       document.getElementById('improvementPlaceholder').innerText = feedbackParts[1] || 'No improvement feedback available';
       document.getElementById('questionsPlaceholder').innerText = feedbackParts[2] || 'No questions available';
     } else {
+      // Display error message if 'role' or 'feedback' is missing
       document.getElementById('rolePlaceholder').innerText = 'No role provided';
       document.getElementById('strengthsPlaceholder').innerText = 'No feedback available';
       document.getElementById('improvementPlaceholder').innerText = 'No feedback available';
       document.getElementById('questionsPlaceholder').innerText = 'No feedback available';
+
+      // Optional: Display error message on the page
+      const errorMessage = document.createElement('p');
+      errorMessage.classList.add('error');
+      errorMessage.innerText = 'Error: Missing role or feedback data!';
+      document.querySelector('.output').appendChild(errorMessage);
     }
   </script>
 </body>
