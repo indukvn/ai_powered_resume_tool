@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Resume Feedback</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f7fa;
       margin: 0;
       padding: 0;
@@ -14,31 +14,31 @@
     }
 
     .container {
-      width: 70%;
-      margin: 30px auto;
-      padding: 20px;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
       background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
 
     .header {
       text-align: center;
       color: #007BFF;
-      font-size: 2.5em;
+      font-size: 2em;
       margin-bottom: 30px;
     }
 
     .output {
-      margin-top: 20px;
-      padding: 15px;
+      padding: 20px;
       background-color: #f9f9f9;
-      border: 1px solid #ddd;
+      border-left: 5px solid #007BFF;
       border-radius: 8px;
     }
 
     .output p {
-      margin: 10px 0;
+      margin: 15px 0;
+      line-height: 1.6;
     }
 
     .footer {
@@ -54,6 +54,11 @@
 
     .error {
       color: red;
+      font-weight: bold;
+    }
+
+    strong {
+      color: #000;
     }
   </style>
 </head>
@@ -71,36 +76,40 @@
     </div>
 
     <div class="footer">
-      <p>Powered by AI to help you land your dream job! <a href="#">Learn more</a></p>
+      <p>Built by Indu | Powered by AI 🚀 <a href="https://indukvn.github.io/">View Portfolio</a></p>
     </div>
   </div>
 
   <script>
-    // Fetch query parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
     const role = urlParams.get('role');
     const feedback = urlParams.get('feedback');
 
     if (role && feedback) {
-      // Dynamically insert values into the page
-      document.getElementById('rolePlaceholder').innerText = role;
-      
-      // Split the feedback string by '|' and assign to the relevant placeholders
-      const feedbackParts = feedback.split('|');
-      document.getElementById('strengthsPlaceholder').innerText = feedbackParts[0] || 'No strengths feedback available';
-      document.getElementById('improvementPlaceholder').innerText = feedbackParts[1] || 'No improvement feedback available';
-      document.getElementById('questionsPlaceholder').innerText = feedbackParts[2] || 'No questions available';
+      // Set role
+      document.getElementById('rolePlaceholder').innerText = decodeURIComponent(role);
+
+      // Process and split feedback
+      const feedbackParts = decodeURIComponent(feedback).split('|');
+
+      document.getElementById('strengthsPlaceholder').innerText =
+        feedbackParts[0]?.trim() || 'No strengths feedback available';
+
+      document.getElementById('improvementPlaceholder').innerText =
+        feedbackParts[1]?.trim() || 'No improvement feedback available';
+
+      document.getElementById('questionsPlaceholder').innerText =
+        feedbackParts.slice(2).join(' ').trim() || 'No questions available';
     } else {
-      // Display error message if 'role' or 'feedback' is missing
+      // If missing values
       document.getElementById('rolePlaceholder').innerText = 'No role provided';
       document.getElementById('strengthsPlaceholder').innerText = 'No feedback available';
       document.getElementById('improvementPlaceholder').innerText = 'No feedback available';
       document.getElementById('questionsPlaceholder').innerText = 'No feedback available';
 
-      // Optional: Display error message on the page
       const errorMessage = document.createElement('p');
       errorMessage.classList.add('error');
-      errorMessage.innerText = 'Error: Missing role or feedback data!';
+      errorMessage.innerText = '⚠️ Missing role or feedback in the URL. Please resubmit the form.';
       document.querySelector('.output').appendChild(errorMessage);
     }
   </script>
